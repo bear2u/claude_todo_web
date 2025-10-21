@@ -22,16 +22,20 @@ export const ChatRoom: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!currentUser) {
-      setShowNameDialog(true);
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  const handleInputFocus = () => {
+    if (!currentUser) {
+      setShowNameDialog(true);
+    }
+  };
+
   const handleSendMessage = () => {
+    if (!currentUser) {
+      setShowNameDialog(true);
+      return;
+    }
     if (messageInput.trim()) {
       sendMessage(messageInput);
       setMessageInput('');
@@ -94,19 +98,19 @@ export const ChatRoom: React.FC = () => {
           <Input
             value={messageInput}
             onChange={(e) => setMessageInput(e.target.value)}
+            onFocus={handleInputFocus}
             onKeyDown={(e) => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 handleSendMessage();
               }
             }}
-            placeholder="Type a message..."
-            disabled={!currentUser}
+            placeholder={currentUser ? "Type a message..." : "Click to enter your name and start chatting..."}
             className="flex-1"
           />
           <Button
             onClick={handleSendMessage}
-            disabled={!currentUser || !messageInput.trim()}
+            disabled={!messageInput.trim()}
             size="icon"
           >
             <Send className="h-4 w-4" />
