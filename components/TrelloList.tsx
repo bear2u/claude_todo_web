@@ -2,11 +2,11 @@
 
 import React, { useState } from 'react';
 import { List } from '@/types';
-import { Droppable, Draggable } from '@hello-pangea/dnd';
+import { Droppable } from '@hello-pangea/dnd';
 import { TrelloCard } from './TrelloCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Plus, X, Pencil, Trash2, MoreHorizontal } from 'lucide-react';
+import { Plus, X, Pencil, Trash2 } from 'lucide-react';
 import { useBoardContext } from '@/context/BoardContext';
 
 interface TrelloListProps {
@@ -40,14 +40,8 @@ export const TrelloList: React.FC<TrelloListProps> = ({ list, index }) => {
   };
 
   return (
-    <Draggable draggableId={list.id} index={index}>
-      {(provided) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          className="bg-neutral-100 rounded-lg p-3 w-[272px] flex-shrink-0"
-        >
-          <div className="flex items-center justify-between mb-3" {...provided.dragHandleProps}>
+    <div className="bg-neutral-100 rounded-lg p-3 w-[272px] flex-shrink-0">
+      <div className="flex items-center justify-between mb-3">
             {isEditingTitle ? (
               <Input
                 value={listTitle}
@@ -166,8 +160,6 @@ export const TrelloList: React.FC<TrelloListProps> = ({ list, index }) => {
               Add a card
             </Button>
           )}
-        </div>
-      )}
-    </Draggable>
+    </div>
   );
 };

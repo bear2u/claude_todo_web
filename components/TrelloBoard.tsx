@@ -9,7 +9,7 @@ import { Plus, X } from 'lucide-react';
 import { useBoardContext } from '@/context/BoardContext';
 
 export const TrelloBoard: React.FC = () => {
-  const { board, addList, moveCard, moveList } = useBoardContext();
+  const { board, addList, moveCard } = useBoardContext();
   const [isAddingList, setIsAddingList] = useState(false);
   const [newListTitle, setNewListTitle] = useState('');
   const [isMounted, setIsMounted] = useState(false);
@@ -27,7 +27,7 @@ export const TrelloBoard: React.FC = () => {
   };
 
   const onDragEnd = (result: DropResult) => {
-    const { destination, source, type } = result;
+    const { destination, source } = result;
 
     if (!destination) {
       return;
@@ -40,19 +40,12 @@ export const TrelloBoard: React.FC = () => {
       return;
     }
 
-    if (type === 'list') {
-      moveList(source.index, destination.index);
-      return;
-    }
-
-    if (type === 'card') {
-      moveCard(
-        source.droppableId,
-        destination.droppableId,
-        source.index,
-        destination.index
-      );
-    }
+    moveCard(
+      source.droppableId,
+      destination.droppableId,
+      source.index,
+      destination.index
+    );
   };
 
   if (!isMounted) {
@@ -86,19 +79,12 @@ export const TrelloBoard: React.FC = () => {
       </div>
 
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="board" type="list" direction="horizontal">
-          {(provided) => (
-            <div
-              ref={provided.innerRef}
-              {...provided.droppableProps}
-              className="flex gap-4 overflow-x-auto pb-4"
-            >
-              {board.lists.map((list, index) => (
-                <TrelloList key={list.id} list={list} index={index} />
-              ))}
-              {provided.placeholder}
+        <div className="flex gap-4 overflow-x-auto pb-4">
+          {board.lists.map((list, index) => (
+            <TrelloList key={list.id} list={list} index={index} />
+          ))}
 
-              <div className="flex-shrink-0">
+          <div className="flex-shrink-0">
                 {isAddingList ? (
                   <div className="bg-neutral-100 rounded-lg p-3 w-[272px]">
                     <Input
@@ -143,9 +129,7 @@ export const TrelloBoard: React.FC = () => {
                   </Button>
                 )}
               </div>
-            </div>
-          )}
-        </Droppable>
+        </div>
       </DragDropContext>
     </div>
   );

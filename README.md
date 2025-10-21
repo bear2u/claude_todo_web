@@ -13,13 +13,13 @@ A modern, feature-rich Trello-style task management application built with Next.
   - ✅ Create new lists
   - ✅ Edit list titles
   - ✅ Delete lists
-  - ✅ Drag and drop to reorder
 
 - **Cards**
   - ✅ Create new cards
   - ✅ Edit card titles and descriptions
   - ✅ Delete cards
   - ✅ Drag and drop cards within lists or between lists
+  - ✅ Move cards between different lists
 
 ### UI/UX
 - 🎨 Beautiful gradient background (blue to purple)
@@ -76,7 +76,6 @@ npm run dev
 ### Managing Lists
 - **Edit**: Click on the list title to edit it inline
 - **Delete**: Click the trash icon in the list header
-- **Reorder**: Drag and drop lists horizontally
 
 ### Creating Cards
 1. Click "Add a card" at the bottom of any list
