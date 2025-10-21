@@ -50,7 +50,7 @@ export const TrelloBoard: React.FC = () => {
 
   if (!isMounted) {
     return (
-      <div className="h-full bg-gradient-to-br from-blue-600 to-purple-700 p-6">
+      <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 p-6">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-white">{board.title}</h1>
         </div>
@@ -73,7 +73,7 @@ export const TrelloBoard: React.FC = () => {
   }
 
   return (
-    <div className="h-full bg-gradient-to-br from-blue-600 to-purple-700 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 p-6">
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-white">{board.title}</h1>
       </div>
