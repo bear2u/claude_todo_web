@@ -26,18 +26,18 @@ export default function TradingHeader() {
   const isPositive = change.startsWith('+');
 
   return (
-    <div className="bg-[#0B0E11] border-b border-[#2B3139] px-4 py-3">
-      <div className="flex items-center gap-8">
+    <div className="bg-[#0B0E11] border-b border-[#2B3139] px-3 md:px-4 py-2 md:py-3">
+      <div className="flex items-center gap-3 md:gap-8">
         {/* Symbol */}
-        <div className="flex items-center gap-2">
-          <h1 className="text-xl font-semibold text-white">BTC/USDT</h1>
-          <span className="text-xs text-gray-400">Bitcoin</span>
+        <div className="flex items-center gap-1 md:gap-2">
+          <h1 className="text-base md:text-xl font-semibold text-white">BTC/USDT</h1>
+          <span className="text-xs text-gray-400 hidden sm:inline">Bitcoin</span>
         </div>
 
         {/* Price */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 md:gap-6 flex-1">
           <div>
-            <div className={`text-2xl font-semibold ${isPositive ? 'text-[#0ECB81]' : 'text-[#F6465D]'}`}>
+            <div className={`text-lg md:text-2xl font-semibold ${isPositive ? 'text-[#0ECB81]' : 'text-[#F6465D]'}`}>
               ${price}
             </div>
             <div className={`text-xs ${isPositive ? 'text-[#0ECB81]' : 'text-[#F6465D]'}`}>
@@ -45,8 +45,8 @@ export default function TradingHeader() {
             </div>
           </div>
 
-          {/* 24h Stats */}
-          <div className="flex gap-6 text-sm">
+          {/* 24h Stats - Hidden on mobile */}
+          <div className="hidden lg:flex gap-6 text-sm">
             <div>
               <div className="text-gray-400 text-xs">24h High</div>
               <div className="text-white">98,432.10</div>
