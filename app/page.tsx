@@ -6,6 +6,7 @@ import TradingViewChart from "@/components/TradingViewChart";
 import OrderBook from "@/components/OrderBook";
 import RecentTrades from "@/components/RecentTrades";
 import OrderPanel from "@/components/OrderPanel";
+import PositionsPanel from "@/components/PositionsPanel";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'orderbook' | 'trades'>('orderbook');
@@ -18,7 +19,7 @@ export default function Home() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
         {/* Chart */}
-        <div className="h-[300px] lg:h-auto lg:flex-1 border-b lg:border-b-0 lg:border-r border-[#2B3139]">
+        <div className="h-[250px] lg:h-auto lg:flex-1 border-b lg:border-b-0 lg:border-r border-[#2B3139]">
           <TradingViewChart />
         </div>
 
@@ -65,9 +66,27 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Bottom: Order Panel */}
-      <div className="h-[280px] lg:h-[300px] border-t border-[#2B3139]">
-        <OrderPanel />
+      {/* Bottom Panels: Order Panel & Positions */}
+      <div className="border-t border-[#2B3139]">
+        {/* Desktop: Side by side */}
+        <div className="hidden lg:flex h-[300px]">
+          <div className="w-1/2 border-r border-[#2B3139]">
+            <OrderPanel />
+          </div>
+          <div className="w-1/2">
+            <PositionsPanel />
+          </div>
+        </div>
+
+        {/* Mobile: Stacked */}
+        <div className="lg:hidden">
+          <div className="h-[240px] border-b border-[#2B3139]">
+            <OrderPanel />
+          </div>
+          <div className="h-[200px]">
+            <PositionsPanel />
+          </div>
+        </div>
       </div>
     </div>
   );
