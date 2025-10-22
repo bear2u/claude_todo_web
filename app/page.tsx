@@ -25,10 +25,10 @@ export default function Home() {
 
         {/* Desktop: Order Book & Recent Trades side by side */}
         <div className="hidden lg:flex lg:w-[340px] flex-col">
-          <div className="h-[300px] border-b border-[#2B3139]">
+          <div className="border-b border-[#2B3139]">
             <OrderBook />
           </div>
-          <div className="h-[300px]">
+          <div>
             <RecentTrades />
           </div>
         </div>
@@ -60,7 +60,7 @@ export default function Home() {
           </div>
 
           {/* Tab Content */}
-          <div className="h-[400px]">
+          <div>
             {activeTab === 'orderbook' ? <OrderBook /> : <RecentTrades />}
           </div>
         </div>

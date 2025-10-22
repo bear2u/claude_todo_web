@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface Trade {
   price: number;
@@ -11,6 +12,7 @@ interface Trade {
 
 export default function RecentTrades() {
   const [trades, setTrades] = useState<Trade[]>([]);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   useEffect(() => {
     // Generate initial trades
@@ -38,38 +40,49 @@ export default function RecentTrades() {
   }, []);
 
   return (
-    <div className="bg-[#0B0E11] h-full flex flex-col">
+    <div className={`bg-[#0B0E11] flex flex-col transition-all duration-300 ${isCollapsed ? '' : 'max-h-[500px]'}`}>
       {/* Header */}
-      <div className="border-b border-[#2B3139] p-3">
+      <div
+        className="border-b border-[#2B3139] p-3 flex items-center justify-between cursor-pointer hover:bg-[#181A20] transition-colors"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
         <h3 className="text-sm font-semibold text-white">Recent Trades</h3>
+        <button className="text-gray-400 hover:text-white transition-colors">
+          {isCollapsed ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+        </button>
       </div>
 
-      {/* Column Headers */}
-      <div className="flex justify-between px-3 py-2 text-xs text-gray-400 border-b border-[#2B3139]">
-        <span>Price(USDT)</span>
-        <span>Amount(BTC)</span>
-        <span>Time</span>
-      </div>
-
-      {/* Trades List */}
-      <div className="flex-1">
-        {trades.map((trade, idx) => (
-          <div
-            key={`${trade.time}-${idx}`}
-            className="flex justify-between px-3 py-1 text-xs hover:bg-[#2B3139] cursor-pointer"
-          >
-            <span className={trade.isBuy ? 'text-[#0ECB81]' : 'text-[#F6465D]'}>
-              {trade.price.toFixed(2)}
-            </span>
-            <span className="text-white">
-              {trade.amount.toFixed(4)}
-            </span>
-            <span className="text-gray-400">
-              {trade.time}
-            </span>
+      {/* Content - Only show when expanded */}
+      {!isCollapsed && (
+        <>
+          {/* Column Headers */}
+          <div className="flex justify-between px-3 py-2 text-xs text-gray-400 border-b border-[#2B3139]">
+            <span>Price(USDT)</span>
+            <span>Amount(BTC)</span>
+            <span>Time</span>
           </div>
-        ))}
-      </div>
+
+          {/* Trades List */}
+          <div className="overflow-y-auto">
+            {trades.map((trade, idx) => (
+              <div
+                key={`${trade.time}-${idx}`}
+                className="flex justify-between px-3 py-1 text-xs hover:bg-[#2B3139] cursor-pointer"
+              >
+                <span className={trade.isBuy ? 'text-[#0ECB81]' : 'text-[#F6465D]'}>
+                  {trade.price.toFixed(2)}
+                </span>
+                <span className="text-white">
+                  {trade.amount.toFixed(4)}
+                </span>
+                <span className="text-gray-400">
+                  {trade.time}
+                </span>
+              </div>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

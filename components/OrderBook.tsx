@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
 
 interface OrderBookItem {
   price: number;
@@ -11,6 +12,7 @@ interface OrderBookItem {
 export default function OrderBook() {
   const [asks, setAsks] = useState<OrderBookItem[]>([]);
   const [bids, setBids] = useState<OrderBookItem[]>([]);
+  const [isCollapsed, setIsCollapsed] = useState(true);
 
   // Generate mock order book data
   useEffect(() => {
@@ -74,45 +76,56 @@ export default function OrderBook() {
   };
 
   return (
-    <div className="bg-[#0B0E11] h-full flex flex-col">
+    <div className={`bg-[#0B0E11] flex flex-col transition-all duration-300 ${isCollapsed ? '' : 'max-h-[500px]'}`}>
       {/* Header */}
-      <div className="border-b border-[#2B3139] p-3">
+      <div
+        className="border-b border-[#2B3139] p-3 flex items-center justify-between cursor-pointer hover:bg-[#181A20] transition-colors"
+        onClick={() => setIsCollapsed(!isCollapsed)}
+      >
         <h3 className="text-sm font-semibold text-white">Order Book</h3>
+        <button className="text-gray-400 hover:text-white transition-colors">
+          {isCollapsed ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+        </button>
       </div>
 
-      {/* Column Headers */}
-      <div className="flex justify-between px-3 py-2 text-xs text-gray-400 border-b border-[#2B3139]">
-        <span>Price(USDT)</span>
-        <span>Amount(BTC)</span>
-        <span>Total</span>
-      </div>
-
-      {/* Orders */}
-      <div className="flex-1">
-        {/* Asks (Sell Orders) */}
-        <div className="flex flex-col-reverse">
-          {asks.map((order, idx) => (
-            <OrderRow key={`ask-${idx}`} order={order} isAsk={true} />
-          ))}
-        </div>
-
-        {/* Current Price */}
-        <div className="bg-[#181A20] py-2 px-3 border-y border-[#2B3139]">
-          <div className="text-[#0ECB81] text-lg font-semibold">
-            {bids[0]?.price.toFixed(2) || '96,234.50'}
+      {/* Content - Only show when expanded */}
+      {!isCollapsed && (
+        <>
+          {/* Column Headers */}
+          <div className="flex justify-between px-3 py-2 text-xs text-gray-400 border-b border-[#2B3139]">
+            <span>Price(USDT)</span>
+            <span>Amount(BTC)</span>
+            <span>Total</span>
           </div>
-          <div className="text-xs text-gray-400">
-            ${bids[0]?.price.toFixed(2) || '96,234.50'}
-          </div>
-        </div>
 
-        {/* Bids (Buy Orders) */}
-        <div>
-          {bids.map((order, idx) => (
-            <OrderRow key={`bid-${idx}`} order={order} isAsk={false} />
-          ))}
-        </div>
-      </div>
+          {/* Orders */}
+          <div className="overflow-y-auto">
+            {/* Asks (Sell Orders) */}
+            <div className="flex flex-col-reverse">
+              {asks.map((order, idx) => (
+                <OrderRow key={`ask-${idx}`} order={order} isAsk={true} />
+              ))}
+            </div>
+
+            {/* Current Price */}
+            <div className="bg-[#181A20] py-2 px-3 border-y border-[#2B3139] sticky top-0 z-10">
+              <div className="text-[#0ECB81] text-lg font-semibold">
+                {bids[0]?.price.toFixed(2) || '96,234.50'}
+              </div>
+              <div className="text-xs text-gray-400">
+                ${bids[0]?.price.toFixed(2) || '96,234.50'}
+              </div>
+            </div>
+
+            {/* Bids (Buy Orders) */}
+            <div>
+              {bids.map((order, idx) => (
+                <OrderRow key={`bid-${idx}`} order={order} isAsk={false} />
+              ))}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
