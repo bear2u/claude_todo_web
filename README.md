@@ -44,6 +44,7 @@ A modern cryptocurrency trading platform UI clone that replicates the Binance tr
 - **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
 - **Charts**: [TradingView Advanced Charts](https://www.tradingview.com/widget/)
+- **Database**: [PostgreSQL](https://www.postgresql.org/) with [Drizzle ORM](https://orm.drizzle.team/)
 - **UI Components**: Custom components
 - **Icons**: [Lucide React](https://lucide.dev/)
 
@@ -53,6 +54,7 @@ A modern cryptocurrency trading platform UI clone that replicates the Binance tr
 
 - Node.js 18+
 - npm, yarn, pnpm, or bun
+- PostgreSQL 14+ (for database features)
 
 ### Installation
 
@@ -67,12 +69,27 @@ cd claude_todo_web
 npm install
 ```
 
-3. Run the development server:
+3. Set up the database:
+```bash
+# Copy the example env file
+cp .env.example .env
+
+# Edit .env and add your PostgreSQL connection string
+# DATABASE_URL=postgresql://username:password@localhost:5432/binance_clone
+
+# Generate database migrations
+npm run db:generate
+
+# Push schema to database
+npm run db:push
+```
+
+4. Run the development server:
 ```bash
 npm run dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Project Structure
 
@@ -85,11 +102,32 @@ claude_todo_web/
 ├── components/
 │   ├── TradingHeader.tsx     # Top ticker bar with price info
 │   ├── TradingViewChart.tsx  # TradingView chart integration
-│   ├── OrderBook.tsx         # Real-time order book
-│   ├── RecentTrades.tsx      # Recent trades feed
-│   └── OrderPanel.tsx        # Buy/Sell order panel
-└── lib/
-    └── utils.ts              # Utility functions
+│   ├── OrderBook.tsx         # Real-time order book (collapsible)
+│   ├── RecentTrades.tsx      # Recent trades feed (collapsible)
+│   ├── OrderPanel.tsx        # Buy/Sell order panel
+│   └── PositionsPanel.tsx    # Futures positions display
+├── db/
+│   ├── schema.ts             # Database schema definitions
+│   └── index.ts              # Database connection
+├── lib/
+│   └── utils.ts              # Utility functions
+└── drizzle.config.ts         # Drizzle ORM configuration
+```
+
+## Database Commands
+
+```bash
+# Generate migrations from schema changes
+npm run db:generate
+
+# Push schema directly to database (for development)
+npm run db:push
+
+# Run migrations
+npm run db:migrate
+
+# Open Drizzle Studio (database GUI)
+npm run db:studio
 ```
 
 ## Build
@@ -138,12 +176,25 @@ npm start
 - Percentage-based amount selection
 - Total calculation
 
+## Database Schema
+
+The application uses PostgreSQL with Drizzle ORM. The schema includes:
+
+- **users**: User accounts with balance tracking
+- **trading_pairs**: Available trading pairs (BTC/USDT, ETH/USDT, etc.)
+- **orders**: Buy/sell orders (limit and market)
+- **positions**: Futures trading positions with leverage
+- **trades**: Executed trade history
+
+All tables include proper foreign key relationships and timestamps.
+
 ## Development Notes
 
-- Mock data is used for order book, trades, and price updates
+- Mock data is used for order book, trades, and price updates (UI demo)
 - TradingView widget loads asynchronously via script injection
-- Dark theme colors match Binance's design system
+- Dark theme colors match Binance's design system (#0B0E11, #181A20, #2B3139)
 - All components are client-side rendered for real-time updates
+- Database ready for backend integration
 
 ## Future Enhancements
 
