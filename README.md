@@ -70,18 +70,30 @@ npm install
 ```
 
 3. Set up the database:
+
+**Option A: Use Cloud PostgreSQL (Easiest)** ⭐
+- Sign up for [Neon](https://neon.tech/) or [Supabase](https://supabase.com/) (Free)
+- Copy your connection string
+- Update `.env` with your DATABASE_URL
+
+**Option B: Use Docker** 🐳
 ```bash
-# Copy the example env file
-cp .env.example .env
+docker-compose up -d
+```
 
-# Edit .env and add your PostgreSQL connection string
-# DATABASE_URL=postgresql://username:password@localhost:5432/binance_clone
+**Option C: Install PostgreSQL locally**
+- See [DATABASE_SETUP.md](./DATABASE_SETUP.md) for detailed instructions
 
-# Generate database migrations
-npm run db:generate
+Then push the schema:
+```bash
+# Test connection
+npm run db:setup
 
 # Push schema to database
 npm run db:push
+
+# Test with sample data
+npm run db:test
 ```
 
 4. Run the development server:
