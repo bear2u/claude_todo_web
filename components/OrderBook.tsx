@@ -88,7 +88,7 @@ export default function OrderBook() {
       </div>
 
       {/* Orders */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1">
         {/* Asks (Sell Orders) */}
         <div className="flex flex-col-reverse">
           {asks.map((order, idx) => (

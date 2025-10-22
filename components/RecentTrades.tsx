@@ -52,7 +52,7 @@ export default function RecentTrades() {
       </div>
 
       {/* Trades List */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1">
         {trades.map((trade, idx) => (
           <div
             key={`${trade.time}-${idx}`}

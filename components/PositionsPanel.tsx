@@ -105,7 +105,7 @@ export default function PositionsPanel() {
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1">
         {activeTab === 'positions' && (
           <>
             {positions.length === 0 ? (

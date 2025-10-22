@@ -12,31 +12,31 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'orderbook' | 'trades'>('orderbook');
 
   return (
-    <div className="h-screen flex flex-col bg-[#0B0E11]">
+    <div className="min-h-screen flex flex-col bg-[#0B0E11]">
       {/* Header */}
       <TradingHeader />
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
+      <div className="flex flex-col lg:flex-row">
         {/* Chart */}
-        <div className="h-[250px] lg:h-auto lg:flex-1 border-b lg:border-b-0 lg:border-r border-[#2B3139]">
+        <div className="h-[400px] lg:h-[600px] lg:flex-1 border-b lg:border-b-0 lg:border-r border-[#2B3139]">
           <TradingViewChart />
         </div>
 
         {/* Desktop: Order Book & Recent Trades side by side */}
         <div className="hidden lg:flex lg:w-[340px] flex-col">
-          <div className="h-1/2 border-b border-[#2B3139]">
+          <div className="h-[300px] border-b border-[#2B3139]">
             <OrderBook />
           </div>
-          <div className="h-1/2">
+          <div className="h-[300px]">
             <RecentTrades />
           </div>
         </div>
 
         {/* Mobile: Tabbed Order Book & Recent Trades */}
-        <div className="lg:hidden flex-1 flex flex-col overflow-hidden">
+        <div className="lg:hidden">
           {/* Tabs */}
-          <div className="flex border-b border-[#2B3139] bg-[#0B0E11]">
+          <div className="flex border-b border-[#2B3139] bg-[#0B0E11] sticky top-0 z-10">
             <button
               className={`flex-1 py-3 text-sm font-medium transition-colors ${
                 activeTab === 'orderbook'
@@ -60,7 +60,7 @@ export default function Home() {
           </div>
 
           {/* Tab Content */}
-          <div className="flex-1 overflow-hidden">
+          <div className="h-[400px]">
             {activeTab === 'orderbook' ? <OrderBook /> : <RecentTrades />}
           </div>
         </div>
@@ -69,21 +69,21 @@ export default function Home() {
       {/* Bottom Panels: Order Panel & Positions */}
       <div className="border-t border-[#2B3139]">
         {/* Desktop: Side by side */}
-        <div className="hidden lg:flex h-[300px]">
-          <div className="w-1/2 border-r border-[#2B3139]">
+        <div className="hidden lg:flex">
+          <div className="w-1/2 border-r border-[#2B3139] min-h-[400px]">
             <OrderPanel />
           </div>
-          <div className="w-1/2">
+          <div className="w-1/2 min-h-[400px]">
             <PositionsPanel />
           </div>
         </div>
 
         {/* Mobile: Stacked */}
         <div className="lg:hidden">
-          <div className="h-[240px] border-b border-[#2B3139]">
+          <div className="min-h-[300px] border-b border-[#2B3139]">
             <OrderPanel />
           </div>
-          <div className="h-[200px]">
+          <div className="min-h-[300px]">
             <PositionsPanel />
           </div>
         </div>

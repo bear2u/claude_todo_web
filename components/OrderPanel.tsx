@@ -108,7 +108,7 @@ export default function OrderPanel() {
   };
 
   return (
-    <div className="bg-[#0B0E11] h-full overflow-auto">
+    <div className="bg-[#0B0E11] h-full">
       {/* Mobile: Buy/Sell Tabs */}
       <div className="lg:hidden">
         <div className="flex border-b border-[#2B3139]">
